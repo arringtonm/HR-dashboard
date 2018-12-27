@@ -1,31 +1,16 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
+  <div>
     <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
+      <li>
+        <div class="column head">Type</div>
+        <div class="column head">Employee</div>
+        <div class="column head">Date</div>
+      </li>
+      <li v-for="event in lifeEventData">
+        <div class="column">{{ eventTypes[event[0]] }}</div>
+        <div class="column">{{ employees[event[1]] }}</div>
+        <div class="column">{{ event[2].toDateString() }}</div>
+      </li>
     </ul>
   </div>
 </template>
@@ -33,26 +18,51 @@
 <script>
 export default {
   name: "HelloWorld",
-  props: {
-    msg: String
-  }
+  data: function() {
+    return {
+      msg: "Hello there friends",
+      employees: { 1: "Ricky Carmichael", 2: "Ryan Dungey"},
+      eventTypes: { 
+        1: "Date of hire",
+        2: "Marriage",
+        3: "Birth/Adoption",
+        4: "Gain of other coverage",
+        5: "Loss of other coverage"
+      },
+      lifeEventData: {
+        // note for later that toDateString() uses 0-index. 
+        1: [1, 1, new Date(2008,7,4)],
+        2: [2, 1, new Date(2010,4,12)],
+        3: [4, 1, new Date(2011,1,1)],
+        4: [1, 2, new Date(2015,8,10)],
+        5: [3, 2, new Date(2016,2,15)],
+        6: [3, 2, new Date(2017,11,30)],
+        7: [5, 1, new Date(2018,6,5)]
+      }
+    }
+  },  
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
 ul {
-  list-style-type: none;
-  padding: 0;
+  margin: none;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  list-style: none;
 }
-a {
-  color: #42b983;
+li:nth-child(odd) {
+  background-color: #eee;
+}
+.column {
+  width: 200px;
+  margin-right: 2em;
+}
+.head {
+  font-weight: 800;
 }
 </style>
