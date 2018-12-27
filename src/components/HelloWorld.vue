@@ -1,24 +1,23 @@
 <template>
   <div>
-    <h3>All events by ID</h3>
+
+    <!-- <h3>All events by ID</h3>
     <ul>
       <li>
-        <!-- Table descriptors -->
         <div class="column head">Employee</div>
         <div class="column head">Type</div>
         <div class="column head">Date</div>
       </li>
       <li v-for="event in lifeEventData" :key="event.id">
-        <!-- Table content -->
         <div class="column">{{ employees[event[2]] }}</div>
         <div class="column">{{ eventTypes[event[1]] }}</div>
         <div class="column">{{ event[3].toDateString() }}</div>
       </li>
     </ul>
+
     <h3>All events by employee (1)</h3>
     <ul>
       <li>
-        <!-- Table descriptors -->
         <div class="column head">Employee</div>
         <div class="column head">Type</div>
         <div class="column head">Date</div>
@@ -29,10 +28,10 @@
         <div class="column">{{ event[3].toDateString() }}</div>  
       </li>
     </ul>
+
     <h3>All events by type (hire)</h3>
     <ul>
       <li>
-        <!-- Table descriptors -->
         <div class="column head">Employee</div>
         <div class="column head">Type</div>
         <div class="column head">Date</div>
@@ -42,6 +41,27 @@
         <div class="column">{{ eventTypes[event[1]] }}</div>
         <div class="column">{{ event[3].toDateString() }}</div>  
       </li>
+    </ul> -->
+
+
+    <h3>All events by date</h3>
+    <!-- <input type="date" v-model="this.startDate">
+    <br>
+    <input type="date" v-model="this.endDate">
+    <br> -->
+    <button @click="updateDate()">Update Date</button>
+    <ul>
+      <li>
+        <div class="column head">Employee</div>
+        <div class="column head">Type</div>
+        <div class="column head">Date</div>
+      </li>
+      <li v-for="date in dateRangeChecker" :key="date.index">
+        <div class="column">{{ employees[date[2]] }}</div>
+        <div class="column">{{ eventTypes[date[1]] }} </div>
+        <div class="column">{{ date[3].toDateString() }}</div>
+      </li>
+
     </ul>
 
 
@@ -53,7 +73,8 @@ export default {
   name: "HelloWorld",
   data: function() {
     return {
-      msg: "Hello there friends",
+      startDate: new Date("1990-01-01"),
+      endDate: new Date("2020-01-01"),
       employees: { 1: "Ricky Carmichael", 2: "Ryan Dungey" },
       eventTypes: {
         1: "Date of hire",
@@ -74,9 +95,15 @@ export default {
       ]
     };
   },
-  mounted() {
-    // console.log(this.sortByEmployee(1));
+  computed: {
+    dateRangeChecker() {
+      const datesInRange = this.lifeEventData.filter(variable =>
+        this.inDateRange(variable[3], this.startDate, this.endDate)
+      );
+      return datesInRange;
+    }
   },
+  // mounted: {},
   methods: {
     sortByEmployee(id) {
       const employeeEvents = this.lifeEventData.filter(
@@ -89,7 +116,27 @@ export default {
         eventType => eventType[1] === type
       );
       return typeEvents;
+    },
+    inDateRange(dateToCheck, startDate, endDate) {
+      return dateToCheck >= startDate && dateToCheck <= endDate;
+    },
+    updateDate() {
+      // console.log(this.endDate);
+      
+      this.endDate = new Date('2015-01-01');
     }
+    // dateRangeChecker(startDate, endDate) {
+    //   const datesInRange = this.lifeEventData.filter(variable =>
+    //     this.inDateRange(variable[3], startDate, endDate)
+    //   );
+    //   return datesInRange;
+    // }
+    // dateRangeChecker() {
+    //   const datesInRange = this.lifeEventData.filter(variable =>
+    //     this.inDateRange(variable[3], this.startDate, this.endDate)
+    //   );
+    //   return datesInRange;
+    // }
   }
 };
 </script>

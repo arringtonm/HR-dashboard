@@ -1,5 +1,13 @@
 # trupp
 
+# Hours logged:
+8:30pm-9:30pm
+10:00am-11:30am
+1:00pm-2:30
+4:00--
+
+
+
 ## Project setup
 ```
 npm install
