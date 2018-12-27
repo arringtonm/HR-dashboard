@@ -29,6 +29,22 @@
         <div class="column">{{ event[3].toDateString() }}</div>  
       </li>
     </ul>
+    <h3>All events by type (hire)</h3>
+    <ul>
+      <li>
+        <!-- Table descriptors -->
+        <div class="column head">Employee</div>
+        <div class="column head">Type</div>
+        <div class="column head">Date</div>
+      </li>
+      <li v-for="event in sortByType(1)" :key="event.id">
+        <div class="column">{{ employees[event[2]] }}</div>
+        <div class="column">{{ eventTypes[event[1]] }}</div>
+        <div class="column">{{ event[3].toDateString() }}</div>  
+      </li>
+    </ul>
+
+
   </div>
 </template>
 
@@ -67,6 +83,12 @@ export default {
         empID => empID[2] === id
       );
       return employeeEvents;
+    },
+    sortByType(type) {
+      const typeEvents = this.lifeEventData.filter(
+        eventType => eventType[1] === type
+      );
+      return typeEvents;
     }
   }
 };
