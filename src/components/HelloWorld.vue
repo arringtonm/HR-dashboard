@@ -45,11 +45,10 @@
 
 
     <h3>All events by date</h3>
-    <!-- <input type="date" v-model="this.startDate">
-    <br>
-    <input type="date" v-model="this.endDate">
-    <br> -->
-    <button @click="updateDate()">Update Date</button>
+    <label class="label" for="dateStartInput">Start Date <span class="smallcaps">(YYYY-MM-DD)</span></label>
+    <input class="input-date" id='dateStartInput' :value='startDate.toJSON().substring(0,10)' @change='startDate = new Date($event.target.value)'>
+    <label class="label" for="dateEndInput">End Date <span class="smallcaps">(YYYY-MM-DD)</span></label>
+    <input class="input-date" id='dateEndInput' :value='endDate.toJSON().substring(0,10)' @change='endDate = new Date($event.target.value)'>
     <ul>
       <li>
         <div class="column head">Employee</div>
@@ -73,8 +72,8 @@ export default {
   name: "HelloWorld",
   data: function() {
     return {
-      startDate: new Date("1990-01-01"),
-      endDate: new Date("2020-01-01"),
+      startDate: new Date("1990/01/01"),
+      endDate: new Date("2020/01/01"),
       employees: { 1: "Ricky Carmichael", 2: "Ryan Dungey" },
       eventTypes: {
         1: "Date of hire",
@@ -120,23 +119,6 @@ export default {
     inDateRange(dateToCheck, startDate, endDate) {
       return dateToCheck >= startDate && dateToCheck <= endDate;
     },
-    updateDate() {
-      // console.log(this.endDate);
-      
-      this.endDate = new Date('2015-01-01');
-    }
-    // dateRangeChecker(startDate, endDate) {
-    //   const datesInRange = this.lifeEventData.filter(variable =>
-    //     this.inDateRange(variable[3], startDate, endDate)
-    //   );
-    //   return datesInRange;
-    // }
-    // dateRangeChecker() {
-    //   const datesInRange = this.lifeEventData.filter(variable =>
-    //     this.inDateRange(variable[3], this.startDate, this.endDate)
-    //   );
-    //   return datesInRange;
-    // }
   }
 };
 </script>
@@ -163,5 +145,21 @@ li:nth-child(odd) {
 }
 .head {
   font-weight: 800;
+}
+
+.input-date {
+  padding: 0.25em;
+  font-family: Avenir;
+  font-size: 1em;
+}
+.smallcaps {
+  font-variant: small-caps;
+  font-size: 0.8em;
+}
+.label {
+  font-size: 0.9em;
+  position: absolute;
+  display: inline-block;
+  transform: translateY(-1.5em);
 }
 </style>

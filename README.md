@@ -3,9 +3,9 @@
 # Hours logged:
 8:30pm-9:30pm
 10:00am-11:30am
-1:00pm-2:30
-4:00--
-
+1:00pm-2:30pm
+3:30pm-4:00pm
+6:00pm-8:00pm
 
 
 ## Project setup
