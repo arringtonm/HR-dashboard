@@ -10,8 +10,8 @@
         <md-datepicker id="endDate" v-model="endDate" :md-open-on-focus="false" />
       </md-table-cell>
       <md-table-cell>
-        <md-field>
-          <label for="employee">Employee</label>
+        <md-field class="md-field-modify">
+          <label for="employee" class="label-modify">Employee</label>
           <md-select v-model="employeeSelected" name="employee" id="employee">
             <md-option value="all">All</md-option>
             <div v-for="(employee, key) in employees" :key="employee.id">
@@ -21,8 +21,8 @@
         </md-field>
       </md-table-cell>
       <md-table-cell>
-        <md-field>
-          <label for="eventtype">Event Type</label>
+        <md-field class="md-field-modify">
+          <label for="eventtype" class="label-modify">Event Type</label>
           <md-select v-model="eventTypeSelected" name="eventtype" id="eventtype">
             <md-option value="all">All</md-option>
             <div v-for="(type, key) in eventTypes" :key="type.id">
@@ -52,8 +52,7 @@ export default {
   data: function() {
     return {
       startDate: "2000/01/01",
-      // endDate: new Date(),
-      endDate: "2015/01/01",
+      endDate: new Date(),
       employeeSelected: "all",
       eventTypeSelected: "all",
       employees: { 1: "Ricky Carmichael", 2: "Ryan Dungey" },
@@ -120,7 +119,7 @@ export default {
         .slice(0, -1);
     },
     customFilter() {
-      return this.sortByType(this.sortByEmployee(this.events));
+      return this.sortByDate(this.sortByType(this.sortByEmployee(this.events)));
       // return this.sortByDate(this.events);
     },
     sortByEmployee(input) {
@@ -143,23 +142,27 @@ export default {
         return typeEvents;
       }
     },
-    // sortByDate(input) {
-    //   let output = {};
-    //   output = input.filter(
-    //     dateCheck => dateCheck.date <= this.endDate
-    //   );
-    //   console.log(output);
-    //   return output;
-    // }
-    // inDateRange(dateToCheck) {
-    //   if (dateToCheck.date >= this.startDate && dateToCheck.date <= this.endDate) {
-    //     return true;
-    //   }
-    // }
+    sortByDate(input) {
+      const output = input.filter(
+        dateCheck => this.inDateRange(dateCheck)
+      );
+      return output;
+    },
+    inDateRange(dateToCheck) {
+      if (new Date(dateToCheck.date) >= new Date(this.startDate) && new Date(dateToCheck.date) <= new Date(this.endDate)) {
+        return true;
+      }
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.md-field-modify {
+  transform: translateY(0.7em);
+}
+.label-modify {
+  transform: translateY(-1.5em);
+}
 </style>
