@@ -1,5 +1,8 @@
 <template>
   <div>
+    <md-table-toolbar>
+      <h1 class="md-title">Life Events Tracker</h1>
+    </md-table-toolbar>
     <md-table>
       <md-table-cell>
         <label for="startDate">Start Date</label>
@@ -31,15 +34,15 @@
           </md-select>
         </md-field>
       </md-table-cell>
+      <md-table-cell>
+        <md-button class="md-raised" @click="resetFilters()">Reset Filters</md-button>
+      </md-table-cell>
     </md-table>
     <md-table v-model="this.customFilter()" md-sort="name" md-sort-order="asc" md-card>
-      <!-- <md-table-toolbar>
-        <h1 class="md-title">Life Events</h1>
-      </md-table-toolbar> -->
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Type" md-sort-by="type">{{ eventTypes[item.type] }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="employee">{{ employees[item.employee] }}</md-table-cell>
+        <md-table-cell md-label="Type" md-sort-by="type">{{ eventTypes[item.type] }}</md-table-cell>
         <md-table-cell md-label="Date" md-sort-by="date">{{ dateRender(item.date) }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -120,7 +123,6 @@ export default {
     },
     customFilter() {
       return this.sortByDate(this.sortByType(this.sortByEmployee(this.events)));
-      // return this.sortByDate(this.events);
     },
     sortByEmployee(input) {
       if (this.employeeSelected === "all") {
@@ -143,15 +145,22 @@ export default {
       }
     },
     sortByDate(input) {
-      const output = input.filter(
-        dateCheck => this.inDateRange(dateCheck)
-      );
+      const output = input.filter(dateCheck => this.inDateRange(dateCheck));
       return output;
     },
     inDateRange(dateToCheck) {
-      if (new Date(dateToCheck.date) >= new Date(this.startDate) && new Date(dateToCheck.date) <= new Date(this.endDate)) {
+      if (
+        new Date(dateToCheck.date) >= new Date(this.startDate) &&
+        new Date(dateToCheck.date) <= new Date(this.endDate)
+      ) {
         return true;
       }
+    },
+    resetFilters() {
+      this.startDate = "2000/01/01";
+      this.endDate = new Date();
+      this.employeeSelected = "all";
+      this.eventTypeSelected = "all";
     }
   }
 };
