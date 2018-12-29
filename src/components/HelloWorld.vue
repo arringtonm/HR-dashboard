@@ -1,9 +1,41 @@
 <template>
   <div>
-    <md-table v-model="events" md-sort="name" md-sort-order="asc" md-card>
-      <md-table-toolbar>
+    <md-table>
+      <md-table-cell>
+        <label for="startDate">Start Date</label>
+        <md-datepicker id="startDate" v-model="startDate" :md-open-on-focus="false" />
+      </md-table-cell>
+      <md-table-cell>
+        <label for="endDate">End Date</label>
+        <md-datepicker id="endDate" v-model="endDate" :md-open-on-focus="false" />
+      </md-table-cell>
+      <md-table-cell>
+        <md-field>
+          <label for="employee">Employee</label>
+          <md-select v-model="employeeSelected" name="employee" id="employee">
+            <md-option value="all">All</md-option>
+            <div v-for="(employee, key) in employees" :key="employee.id">
+              <md-option :value="key">{{ employee }}</md-option>
+            </div>
+          </md-select>
+        </md-field>
+      </md-table-cell>
+      <md-table-cell>
+        <md-field>
+          <label for="eventtype">Event Type</label>
+          <md-select v-model="eventTypeSelected" name="eventtype" id="eventtype">
+            <md-option value="all">All</md-option>
+            <div v-for="(type, key) in eventTypes" :key="type.id">
+              <md-option :value="key">{{ type }}</md-option>
+            </div>
+          </md-select>
+        </md-field>
+      </md-table-cell>
+    </md-table>
+    <md-table v-model="this.customFilter()" md-sort="name" md-sort-order="asc" md-card>
+      <!-- <md-table-toolbar>
         <h1 class="md-title">Life Events</h1>
-      </md-table-toolbar>
+      </md-table-toolbar> -->
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Type" md-sort-by="type">{{ eventTypes[item.type] }}</md-table-cell>
@@ -20,7 +52,10 @@ export default {
   data: function() {
     return {
       startDate: "2000/01/01",
-      endDate: "2018/01/28",
+      // endDate: new Date(),
+      endDate: "2015/01/01",
+      employeeSelected: "all",
+      eventTypeSelected: "all",
       employees: { 1: "Ricky Carmichael", 2: "Ryan Dungey" },
       eventTypes: {
         1: "Date of hire",
@@ -75,14 +110,6 @@ export default {
       ]
     };
   },
-  computed: {
-    dateRangeChecker() {
-      const datesInRange = this.lifeEventData.filter(dateRange =>
-        this.inDateRange(dateRange[date], this.startDate, this.endDate)
-      );
-      return datesInRange;
-    }
-  },
   methods: {
     dateRender(date) {
       const dateOut = new Date(date);
@@ -92,21 +119,43 @@ export default {
         .toString()
         .slice(0, -1);
     },
-    // customFilter() {
-    // },
-    sortByEmployee(id) {
-      const employeeEvents = this.events.filter(empID => empID.employee === id);
-      return employeeEvents;
+    customFilter() {
+      return this.sortByType(this.sortByEmployee(this.events));
+      // return this.sortByDate(this.events);
     },
-    sortByType(typeToCheck) {
-      const typeEvents = this.lifeEventData.filter(
-        eventType => eventType.type === typeToCheck
-      );
-      return typeEvents;
+    sortByEmployee(input) {
+      if (this.employeeSelected === "all") {
+        return input;
+      } else {
+        const output = input.filter(
+          empID => empID.employee == this.employeeSelected
+        );
+        return output;
+      }
     },
-    inDateRange(dateToCheck, startDate, endDate) {
-      return dateToCheck >= startDate && dateToCheck <= endDate;
-    }
+    sortByType(input) {
+      if (this.eventTypeSelected == "all") {
+        return input;
+      } else {
+        const typeEvents = input.filter(
+          eventType => eventType.type == this.eventTypeSelected
+        );
+        return typeEvents;
+      }
+    },
+    // sortByDate(input) {
+    //   let output = {};
+    //   output = input.filter(
+    //     dateCheck => dateCheck.date <= this.endDate
+    //   );
+    //   console.log(output);
+    //   return output;
+    // }
+    // inDateRange(dateToCheck) {
+    //   if (dateToCheck.date >= this.startDate && dateToCheck.date <= this.endDate) {
+    //     return true;
+    //   }
+    // }
   }
 };
 </script>

@@ -6,6 +6,7 @@
 1:00pm-2:30pm
 3:30pm-4:00pm
 6:00pm-8:00pm
+1:00pm-
 
 
 ## Project setup
