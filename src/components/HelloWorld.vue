@@ -38,7 +38,9 @@
         <md-button class="md-raised" @click="resetFilters()">Reset Filters</md-button>
       </md-table-cell>
     </md-table>
-    <md-table v-model="this.customFilter()" md-sort="name" md-sort-order="asc" md-card>
+    <md-table v-model="this.customFilter()" md-sort-order="asc" md-card>
+    <!-- <md-table v-model="customFilter()" md-sort="name" md-sort-order="asc" md-card> -->
+    <!-- dynamic sorting by column type not working with customFilter() -->
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="employee">{{ employees[item.employee] }}</md-table-cell>
