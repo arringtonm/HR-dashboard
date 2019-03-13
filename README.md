@@ -1,4 +1,4 @@
-# Trupp Coding Exercise 
+# Coding Exercise for a local HR firm
 
 ## Project setup
 ```
