@@ -1,4 +1,6 @@
-# Coding Exercise for a local HR firm
+# Coding Exercise
+
+Task was to display and sort data by event type and employee number
 
 ## Project setup
 ```
