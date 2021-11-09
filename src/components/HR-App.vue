@@ -1,8 +1,5 @@
 <template>
   <div>
-    <md-table-toolbar>
-      <h1 class="md-title">Life Events Tracker</h1>
-    </md-table-toolbar>
     <md-table>
       <md-table-cell>
         <label for="startDate">Start Date</label>
@@ -38,9 +35,8 @@
         <md-button class="md-raised" @click="resetFilters()">Reset Filters</md-button>
       </md-table-cell>
     </md-table>
+    <!-- eslint-disable-next-line -->
     <md-table v-model="this.customFilter()" md-sort-order="asc" md-card>
-    <!-- <md-table v-model="customFilter()" md-sort="name" md-sort-order="asc" md-card> -->
-    <!-- dynamic sorting by column type not working with customFilter() -->
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="employee">{{ employees[item.employee] }}</md-table-cell>
@@ -53,7 +49,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "HR-App",
   data: function() {
     return {
       startDate: "2000/01/01",
@@ -168,7 +164,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .md-field-modify {
   transform: translateY(0.7em);
